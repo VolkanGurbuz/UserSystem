@@ -7,14 +7,23 @@ import ErrorModel from "../UI/ErrorModel";
 const AddUser = props => {
     const [enteredUsername, setEnteredUserName] = useState('');
     const [enteredAge, setEnteredAge] = useState('');
+    const [error, setError] = useState();
+
+    const errorHandle = () => {
+        setError(null);
+    };
 
     const addUserHandler = (event) => {
         event.preventDefault();
-        if (enteredUsername.trim().length === 0 || enteredAge.trim().length === 0)
+        if (enteredUsername.trim().length === 0 || enteredAge.trim().length === 0) {
+            setError({title: 'valid input', message: "Please enter a valid name and age (non-empty values)"})
             return;
+        }
         //number with +
-        if (+enteredAge < 1)
+        if (+enteredAge < 1) {
+            setError({title: 'Invalid age', message: "Please enter a valid age"})
             return;
+        }
 
         props.onAddUser(enteredUsername, enteredAge);
         console.log(enteredUsername, enteredAge)
@@ -32,7 +41,7 @@ const AddUser = props => {
     //which label belongs to which inputs for screen readers htmlFor
     return (
         <div>
-            <ErrorModel title="An error occured! " message="Something went wrong!"/>
+            {error && <ErrorModel onConfirm={errorHandle} title={error.title} message={error.message}/>}
             <Card className={classes.input}>
                 <form onSubmit={addUserHandler}>
                     <label htmlFor="username">Username</label>
