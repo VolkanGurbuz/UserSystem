@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import Card from "../UI/Card";
 import classes from "./AddUser.module.css";
 import Button from "../UI/Button";
+import ErrorModel from "../UI/ErrorModel";
 
 const AddUser = props => {
     const [enteredUsername, setEnteredUserName] = useState('');
@@ -30,15 +31,17 @@ const AddUser = props => {
 
     //which label belongs to which inputs for screen readers htmlFor
     return (
-        <Card className={classes.input}>
-            <form onSubmit={addUserHandler}>
-                <label htmlFor="username">Username</label>
-                <input id="username" value={enteredUsername} onChange={userNameChangeHandler} type="text"/>
-                <label htmlFor="age">Age (Years)</label>
-                <input id="age" value={enteredAge} onChange={ageChangeHandler} type="number"/>
-                <Button type="submit">Add User</Button>
-            </form>
-        </Card>);
+        <div>
+            <ErrorModel title="An error occured! " message="Something went wrong!"/>
+            <Card className={classes.input}>
+                <form onSubmit={addUserHandler}>
+                    <label htmlFor="username">Username</label>
+                    <input id="username" value={enteredUsername} onChange={userNameChangeHandler} type="text"/>
+                    <label htmlFor="age">Age (Years)</label>
+                    <input id="age" value={enteredAge} onChange={ageChangeHandler} type="number"/>
+                    <Button type="submit">Add User</Button>
+                </form>
+            </Card></div>);
 
 };
 
